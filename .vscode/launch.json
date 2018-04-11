@@ -7,6 +7,7 @@
             "name": "Launch Program",
             "program": "${workspaceRoot}/src/index.js",
             "sourceMaps": true,
+            "trace": true,
             "outFiles": [
                 "${workspaceRoot}/build/*"
             ],

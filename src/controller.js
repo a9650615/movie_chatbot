@@ -1,5 +1,5 @@
 import Api from './api'
-import { MovieView } from './template'
+import { MovieView, ActorView } from './template'
 
 class Controller {
   async getMovie({ id }) {
@@ -13,6 +13,12 @@ class Controller {
       type: 'text',
       text: data.summary
     }
+  }
+
+  async getActor({id}) {
+    const data = await Api.getActors(id)
+    console.log(data.actors)
+    return ActorView({ data })
   }
 }
 

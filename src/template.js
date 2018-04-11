@@ -6,38 +6,33 @@ const MovieView = ({ data, id }) => (
         "type": "carousel",
         "columns": [
             {
-              "thumbnailImageUrl": "https://example.com/bot/images/item1.jpg",
+              "thumbnailImageUrl": `${data.cover}`,
               "imageBackgroundColor": "#FFFFFF",
               "title": `${data.title}`,
-              "text": `${data.summary.length>30?`${data.summary.substring(0, 30)}...(點擊查看更多)`:data.summary}`,
-              "defaultAction": {
-                  "type": "postback",
-                  "label": "View detail",
-                  "data": `action=getMovieSummary&id=${id}`
-              },
+              "text": `${data.upTime}\u000A主要演員:${data.actors}`.substring(0,57),
               "actions": [
                   {
                       "type": "postback",
-                      "label": "Buy",
-                      "data": "action=buy&id=111"
+                      "label": "主要演員",
+                      "data": `action=getActor&id=${id}`
                   }
               ]
             },
             {
-              "thumbnailImageUrl": "https://example.com/bot/images/item2.jpg",
+              "thumbnailImageUrl": `${data.cover}`,
               "imageBackgroundColor": "#000000",
-              "title": "this is menu",
-              "text": "description",
+              "title": "簡介",
+              "text": `${data.summary.length>40?`${data.summary.substring(0, 40)}...(點擊查看更多)`:data.summary}`,
               "defaultAction": {
-                  "type": "uri",
-                  "label": "View detail",
-                  "uri": "http://example.com/page/222"
+                "type": "postback",
+                "label": "View detail",
+                "data": `action=getMovieSummary&id=${id}`
               },
               "actions": [
                   {
                       "type": "postback",
-                      "label": "Buy",
-                      "data": "action=buy&itemid=222"
+                      "label": "查看完整簡介",
+                      "data": `action=getMovieSummary&id=${id}`
                   }
               ]
             }
@@ -48,6 +43,34 @@ const MovieView = ({ data, id }) => (
   }
 )
 
+const ActorView = ({ data }) => (
+	{
+			"type": "template",
+			"altText": "this is a carousel template",
+			"template": {
+					"type": "carousel",
+					"columns": [
+						...data.actors.map((data) => {
+							return {
+								"thumbnailImageUrl": `${data.img}`,
+								"imageBackgroundColor": "#FFFFFF",
+								"title": `${data.text[0]}`,
+								"text": `${data.text.slice(1).join(' ')}`,
+								actions: [{ 
+									"type": "message",
+									"label": "回到電影介紹",
+									"text": "回到電影介紹"
+								}]
+							}
+						})
+					],
+					"imageAspectRatio": "rectangle",
+					"imageSize": "cover"
+			}
+	}
+)
+
 export {
-  MovieView
+  MovieView,
+  ActorView
 }

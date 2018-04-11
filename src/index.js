@@ -30,7 +30,7 @@ let eventDispatcher = async (event) => {
         if (event.message.type === "text") {
           if (type == 'user') {
             const message = await Controller.getMovie({id: 7161})
-            lineClient.pushMessage(userId, message).catch(data => console.log(data))
+            lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
           }
         }
       break;
@@ -46,7 +46,7 @@ let postBackDispatcher = async({ event, userId, type }) => {
   if (Controller[data.action]) {
     let message = await Controller[data.action]({ id: data.id })
     if (message) {
-      lineClient.pushMessage(userId, message).catch(data => console.log(data))
+      lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
     }
   }
 }

@@ -29,8 +29,25 @@ class Api {
     const data = {
       actors: actor
     }
-
+    
     return data
+  }
+  
+  async searchMovie(name) {
+    let $ = await Pather.patchEle(`moviesearch_result.html?keyword=${name}&type=movie`)
+    let list = []
+    // console.log($('.searchpage ul.release_list').text())
+    $('.release_list>li').each((index, ele) => {
+      const data = {
+        img: $(ele).find('.foto>img').attr('src'),
+        title: $(ele).find('.release_movie_name>a').text(),
+        time: $(ele).find('.release_movie_name .time').text(),
+        id: $(ele).find('.release_movie_name>a').attr('href').replace('https://movies.yahoo.com.tw/movieinfo_main.html/id=', '')
+      }
+      list.push(data)
+    })
+
+    return list;
   }
 }
 

@@ -70,7 +70,35 @@ const ActorView = ({ data }) => (
 	}
 )
 
+const SearchView = ({ data }) => (
+	{
+			"type": "template",
+			"altText": "this is a carousel template",
+			"template": {
+					"type": "carousel",
+					"columns": [
+						...data.map((data) => {
+							return {
+								"thumbnailImageUrl": `${data.img}`,
+								"imageBackgroundColor": "#FFFFFF",
+								"title": `${data.title}`,
+								"text": `${data.time}`,
+								actions: [{ 
+									"type": "postback",
+									"label": "詳細內容",
+									"data": `action=getMovie&id=${data.id}`
+								}]
+							}
+						})
+					],
+					"imageAspectRatio": "rectangle",
+					"imageSize": "cover"
+			}
+	}
+)
+
 export {
   MovieView,
-  ActorView
+	ActorView,
+	SearchView
 }

@@ -16,7 +16,7 @@ app.use(KoaBody())
 let eventDispatcher = async (event) => {
   const userId = event.source.userId
   const type = event.source.type // user|group
-  console.log(event.type)
+  console.log(event.message)
   switch(event.type) {
     case 'follow':
       break;
@@ -29,8 +29,10 @@ let eventDispatcher = async (event) => {
     case 'message':
         if (event.message.type === "text") {
           if (type == 'user') {
-            const message = await Controller.getMovie({id: 7161})
-            lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
+            // const message = await Controller.getMovie({id: 7161})
+            const message = await Controller.searchMovie(event.message.text)
+            if (message)
+              lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
           }
         }
       break;

@@ -1,9 +1,9 @@
 import Api from './api'
-import { MovieView, ActorView } from './template'
+import { MovieView, ActorView, SearchView} from './template'
 
 class Controller {
   async getMovie({ id }) {
-    const data = await Api.getMovieData(7161)
+    const data = await Api.getMovieData(id)
     return MovieView({ data, id });
   }
 
@@ -17,8 +17,15 @@ class Controller {
 
   async getActor({id}) {
     const data = await Api.getActors(id)
-    console.log(data.actors)
-    return ActorView({ data })
+    if (data.actors.length)
+      return ActorView({ data })
+    else 
+      return { type: 'text', text: '沒有演員清單資訊' }
+  }
+
+  async searchMovie(name) {
+    const data = await Api.searchMovie(name)
+    return SearchView({ data })
   }
 }
 

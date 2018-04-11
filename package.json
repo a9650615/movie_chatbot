@@ -1,0 +1,31 @@
+{
+  "name": "chat_bot",
+  "version": "0.0.0",
+  "description": "a line chat bot for movie search",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node src/index.js --presets es2015,stage-2",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist --source-maps",
+    "debug": "babel ./src -d ./build & node ./build/index.js"
+  },
+  "keywords": [
+    "chatbot"
+  ],
+  "author": "Birdyo Tsai",
+  "license": "ISC",
+  "dependencies": {
+    "@google/chatbase": "^1.1.1",
+    "@line/bot-sdk": "^6.0.1",
+    "apiai": "^4.0.3",
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "koa": "^2.5.0",
+    "koa-body": "^2.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
+  }
+}

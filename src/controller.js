@@ -25,7 +25,10 @@ class Controller {
 
   async searchMovie(name) {
     const data = await Api.searchMovie(name)
-    return SearchView({ data })
+    if (data.length)
+      return SearchView({ data })
+    else 
+      return {type: 'text', text: `沒有找到 ${name} 相關電影`}
   }
 
   async getStagePhoto({ id }) {
@@ -38,6 +41,14 @@ class Controller {
       type: 'image',
       originalContentUrl: src,
       previewImageUrl: src
+    }
+  }
+
+  async isRecommend({ id }) {
+    const data = await Api.getScore(id)
+    return {
+      type: 'text',
+      text: `我覺得${data>3.5?'可以':'不行'}`
     }
   }
 }

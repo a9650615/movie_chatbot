@@ -1,6 +1,7 @@
 import Koa from 'koa'
 import KoaBody from 'koa-body'
 import { Client, validateSignature, WebhookEvent } from "@line/bot-sdk"
+import ApiAi from 'apiai'
 import Api from './api'
 import {LINE} from './config'
 import Controller from './controller'
@@ -9,6 +10,7 @@ const lineClient = new Client({
   channelSecret: LINE.channelSecret,
   channelAccessToken: LINE.channelAccessToken
 })
+
 
 const app = new Koa();
 app.use(KoaBody())

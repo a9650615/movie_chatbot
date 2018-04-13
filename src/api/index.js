@@ -63,6 +63,11 @@ class Api {
   //   let data = href.split(',')
   //   let $ = await Pather.patchEle(`movieinfo_photos.html/id=${data[0]}?movie_photo_id=${data[1]}`)
   // }
+
+  async getScore(id) {
+    let $ = await Pather.patchEle(`movieinfo_main.html/id=${id}`)
+    return Number($('.score_num.count').text()||$('.count').text()) 
+  }
 }
 
 export default new Api()

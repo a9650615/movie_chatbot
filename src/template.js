@@ -1,7 +1,7 @@
 const MovieView = ({ data, id }) => (
   {
     "type": "template",
-    "altText": "this is a carousel template",
+    "altText": "電影簡介選單",
     "template": {
         "type": "carousel",
         "columns": [
@@ -56,7 +56,7 @@ const MovieView = ({ data, id }) => (
 const ActorView = ({ data }) => (
 	{
 			"type": "template",
-			"altText": "this is a carousel template",
+			"altText": "演員列表",
 			"template": {
 					"type": "carousel",
 					"columns": [
@@ -83,7 +83,7 @@ const ActorView = ({ data }) => (
 const SearchView = ({ data }) => (
 	{
 			"type": "template",
-			"altText": "this is a carousel template",
+			"altText": "搜尋列表",
 			"template": {
 					"type": "carousel",
 					"columns": [
@@ -110,7 +110,7 @@ const SearchView = ({ data }) => (
 const ImagesList = ({ data, id }) => (
 	{
 		"type": "template",
-		"altText": "this is a image carousel template",
+		"altText": "圖片列表",
 		"template": {
 				"type": "image_carousel",
 				"columns": [

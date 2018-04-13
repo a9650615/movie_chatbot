@@ -54,8 +54,8 @@ const ActorView = ({ data }) => (
 							return {
 								"thumbnailImageUrl": `${data.img}`,
 								"imageBackgroundColor": "#FFFFFF",
-								"title": `${data.text[0]}`,
-								"text": `${data.text.slice(1).join(' ')}`,
+								"title": `${data.text[0]||data.text}`,
+								"text": `${data.text.slice(1).join(' ')||'~'}`,
 								actions: [{ 
 									"type": "message",
 									"label": "回到電影介紹",

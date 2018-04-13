@@ -11,11 +11,16 @@ const MovieView = ({ data, id }) => (
               "title": `${data.title}`,
               "text": `${data.upTime}\u000A主要演員:${data.actors}`.substring(0,57),
               "actions": [
-                  {
-                      "type": "postback",
-                      "label": "主要演員",
-                      "data": `action=getActor&id=${id}`
-                  }
+								{
+									"type": "postback",
+									"label": "查看劇照",
+									"data": `action=getStagePhoto&id=${id}`
+								},
+								{
+										"type": "postback",
+										"label": "主要演員",
+										"data": `action=getActor&id=${id}`
+								}
               ]
             },
             {
@@ -33,7 +38,12 @@ const MovieView = ({ data, id }) => (
                       "type": "postback",
                       "label": "查看完整簡介",
                       "data": `action=getMovieSummary&id=${id}`
-                  }
+									},
+									{
+										"type": "postback",
+										"label": "是否推薦",
+										"data": `action=isRecommend&id=${id}`
+									}
               ]
             }
         ],
@@ -97,8 +107,31 @@ const SearchView = ({ data }) => (
 	}
 )
 
+const ImagesList = ({ data, id }) => (
+	{
+		"type": "template",
+		"altText": "this is a image carousel template",
+		"template": {
+				"type": "image_carousel",
+				"columns": [
+					...data.map((source) => {
+						return ({
+							"imageUrl": source.src,
+							"action": {
+								"type": "postback",
+								"label": "查看大圖",
+								"data": `action=image&src=${source.src}&href=${(source.href)}`
+							}
+						})
+					}).slice(0, 10)
+				]
+		}
+	}
+)
+
 export {
   MovieView,
 	ActorView,
-	SearchView
+	SearchView,
+	ImagesList
 }

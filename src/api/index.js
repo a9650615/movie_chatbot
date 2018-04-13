@@ -49,6 +49,20 @@ class Api {
 
     return list;
   }
+
+  async searchPhoto(id) {
+    let $ = await Pather.patchEle(`movieinfo_main.html/id=${id}`)
+    let list = []
+    $('.l_box:nth-child(4) .trailer_list a').each((index, ele) => {
+      list.push({src: $(ele).find('img').attr('src'), href: $(ele).attr('href').replace('https://movies.yahoo.com.tw/movieinfo_photos.html/id=', '').replace('?movie_photo_id=', ',')})
+    })
+    return list
+  }
+
+  // async bigPhoto({ href }) {
+  //   let data = href.split(',')
+  //   let $ = await Pather.patchEle(`movieinfo_photos.html/id=${data[0]}?movie_photo_id=${data[1]}`)
+  // }
 }
 
 export default new Api()

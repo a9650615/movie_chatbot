@@ -1,5 +1,5 @@
 import Api from './api'
-import { MovieView, ActorView, SearchView} from './template'
+import { MovieView, ActorView, SearchView, ImagesList } from './template'
 
 class Controller {
   async getMovie({ id }) {
@@ -26,6 +26,19 @@ class Controller {
   async searchMovie(name) {
     const data = await Api.searchMovie(name)
     return SearchView({ data })
+  }
+
+  async getStagePhoto({ id }) {
+    const data = await Api.searchPhoto(id)
+    return ImagesList({ data, id })
+  }
+  
+  image ({ src, href }) {
+    return {
+      type: 'image',
+      originalContentUrl: src,
+      previewImageUrl: src
+    }
   }
 }
 

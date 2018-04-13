@@ -16,7 +16,7 @@ app.use(KoaBody())
 let eventDispatcher = async (event) => {
   const userId = event.source.userId
   const type = event.source.type // user|group
-  console.log(event.message)
+  // console.log(event.message)
   switch(event.type) {
     case 'follow':
       break;
@@ -44,9 +44,11 @@ let eventDispatcher = async (event) => {
 
 let postBackDispatcher = async({ event, userId, type }) => {
   let data = event.postback.data
+  console.log(data)
   data = JSON.parse('{"' + decodeURI(data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
   if (Controller[data.action]) {
-    let message = await Controller[data.action]({ id: data.id })
+    console.log('action is:'+data.action)
+    let message = await Controller[data.action](data)
     if (message) {
       lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
     }

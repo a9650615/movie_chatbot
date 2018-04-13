@@ -3,17 +3,41 @@ import KoaBody from 'koa-body'
 import { Client, validateSignature, WebhookEvent } from "@line/bot-sdk"
 import ApiAi from 'apiai'
 import Api from './api'
-import {LINE} from './config'
+import {LINE, DIALOG_FLOW} from './config'
 import Controller from './controller'
+import AiController from './aiController'
 
 const lineClient = new Client({
   channelSecret: LINE.channelSecret,
   channelAccessToken: LINE.channelAccessToken
 })
 
+const dialogFlow = ApiAi(DIALOG_FLOW);
 
 const app = new Koa();
 app.use(KoaBody())
+
+const AiAgent = (message = '', userId) => {
+  return new Promise(async (resolve, reject) => {
+    let request = dialogFlow.textRequest(message, {
+      sessionId: userId
+    });
+    console.log(message)
+    request.on('response', async function(response) {
+      if (response.result.action) {
+        console.log('action:'+response.result.action)
+        if (AiController[response.result.action]) {
+          let message = await AiController[response.result.action](response.result)
+          resolve(message)
+        }
+      }
+    });
+    
+    request.on('error', reject);
+    
+    request.end();
+  })
+}
 
 let eventDispatcher = async (event) => {
   const userId = event.source.userId
@@ -30,9 +54,13 @@ let eventDispatcher = async (event) => {
       break;
     case 'message':
         if (event.message.type === "text") {
+          let message;
           if (type == 'user') {
-            // const message = await Controller.getMovie({id: 7161})
-            const message = await Controller.searchMovie(event.message.text)
+            message = await AiAgent(event.message.text, userId)
+            console.log(message)
+            if (!message)
+              // const message = await Controller.getMovie({id: 7161})
+              message = await Controller.searchMovie(event.message.text)
             if (message)
               lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
           }

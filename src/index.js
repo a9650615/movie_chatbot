@@ -28,6 +28,7 @@ const AiAgent = (message = '', userId) => {
       if (response.result.action!='input.unknown') {
         console.log('action:'+response.result.action)
         if (AiController[response.result.action]) {
+          console.log(response.result)
           let message = await AiController[response.result.action](response.result)
           resolve(message)
         }

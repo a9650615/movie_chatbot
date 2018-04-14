@@ -1,6 +1,7 @@
 import Api from './api'
 import TmpData from './TmpData'
 import { MovieView, ActorView, SearchView, ImagesList } from './template'
+import DataApi from './api/dataApi'
 
 class Controller {
   async getMovie({ id }, userId) {
@@ -9,6 +10,11 @@ class Controller {
       movie_id: id,
       movie_name: data.title
     }
+    DataApi.createSearchHistory({
+      movie_id: id,
+      movie_name: data.title,
+      user: userId
+    })
     return MovieView({ data, id });
   }
 
@@ -55,6 +61,10 @@ class Controller {
       type: 'text',
       text: `我覺得${data>3.5?'可以':'不行'}`
     }
+  }
+
+  async subscribe({ }, userId) {
+
   }
 }
 

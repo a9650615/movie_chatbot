@@ -76,7 +76,11 @@ class AiController {
   }
 
   async hotFavorite({ parameters, fulfillment }, userId) {
-    
+    return await Controller.hotFavorite({}, userId)
+  }
+
+  async hotSearch({}, userId) {
+    return await Controller.hotSearch({}, userId)
   }
 
 }

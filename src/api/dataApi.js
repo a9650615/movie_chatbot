@@ -43,6 +43,14 @@ class DataApi {
   async searchAllSubscribe() {
     return await conn.query(`SELECT * FROM subscribe_list`)
   }
+
+  async hotFavoriteList() {
+    return await conn.query(`SELECT COUNT(movie_id) as count,movie_id, movie_name FROM favorite_history GROUP BY movie_id ORDER BY count DESC`)
+  }
+
+  async hotSearchList() {
+    return await conn.query(`SELECT COUNT(movie_id) as count,movie_id, movie_name FROM search_history GROUP BY movie_id ORDER BY count DESC`)
+  }
 }
 
 

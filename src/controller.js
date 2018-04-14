@@ -112,6 +112,39 @@ class Controller {
       await client.pushMessage(ele.user, template).catch(data => console.log(data.originalError.response.data))
     })
   }
+
+  async hotFavorite({}, userId) {
+    let data = await DataApi.hotFavoriteList();
+    console.log(data)
+    let list = data.map((val) => ({
+      label: val.movie_name,
+      action: `action=getMovie&id=${val.movie_id}`
+    }))
+    
+    return SelectorList({
+      options: list,
+      title: '熱門收藏列表',
+      content: '最熱門四筆, 請查看',
+      image: 'https://i.imgur.com/V8pc4F0.jpg'
+    })
+  }
+
+  async hotSearch({}, userId) {
+    let data = await DataApi.hotSearchList();
+    console.log(data)
+    console.log('do it')
+    let list = data.map((val) => ({
+      label: val.movie_name,
+      action: `action=getMovie&id=${val.movie_id}`
+    }))
+    
+    return SelectorList({
+      options: list,
+      title: '熱門搜尋列表',
+      content: '最熱門四筆, 請查看',
+      image: 'https://i.imgur.com/V8pc4F0.jpg'
+    })
+  }
 }
 
 export default new Controller();

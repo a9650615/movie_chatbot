@@ -23,6 +23,14 @@ class DataApi {
   async unSubscribe({ user }) {
     return await conn.query(`DELETE FROM subscribe_list WHERE user='${user}'`)
   }
+
+  async setFavorite({ movie_id, movie_name, user }) {
+    return await conn.query(`INSERT INTO favorite_history(movie_name, movie_id, user) VALUES('${movie_name}', '${movie_id}', '${user}')`)
+  }
+
+  async unSetFavorite({ movie_id, movie_name, user }) {
+    return await conn.query(`DELETE FROM favorite_history WHERE movie_name='${movie_id}' and movie_name='${movie_name}' and user='${user}'`)
+  }
 }
 
 

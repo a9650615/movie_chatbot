@@ -77,6 +77,16 @@ class Controller {
     let i = Math.floor(Math.random() * (list.length))
     return await this.getMovie({id: list[i].id}, userId, true)
   }
+
+  async setFavorite({ id, name } , userId) {
+    await DataApi.setFavorite({movie_id: id, movie_name: name, user: userId})
+    return {type: 'text', text: `已幫你收藏${name}`}
+  }
+
+  async removeFavorite({ id, name } , userId) {
+    await DataApi.unSetFavorite({movie_id: id, movie_name: name, user: userId})
+    return {type: 'text', text: `已幫你移除${name}`}
+  }
 }
 
 export default new Controller();

@@ -49,6 +49,24 @@ class AiController {
   async randomRecommand({} ,userId) {
     return await Controller.randomRecommand({}, userId)
   }
+
+  async setFavorite({ parameters, fulfillment }, userId) {
+    if (TmpData.lastSearch[userId]) {
+      let lastData = TmpData.lastSearch[userId];
+      return Controller.setFavorite({ id: lastData.movie_id, name: lastData.movie_name }, userId)
+    } else if (fulfillment.speech == '') {
+      return { type: 'text', text: fulfillment.speech }
+    }
+  }
+
+  async removeFavorite({ parameters, fulfillment }, userId) {
+    if (TmpData.lastSearch[userId]) {
+      let lastData = TmpData.lastSearch[userId];
+      return Controller.removeFavorite({ id: lastData.movie_id, name: lastData.movie_name }, userId)
+    } else if (fulfillment.speech == '') {
+      return { type: 'text', text: fulfillment.speech }
+    }
+  }
 }
 
 export default new AiController()

@@ -101,6 +101,17 @@ class Controller {
       content: '最近四筆, 請選擇'
     })
   }
+
+  async sendAllRecommand({ client }, userId) {
+    let userList = await DataApi.searchAllSubscribe()
+    let template = await this.randomRecommand({}, userId)
+    console.log(userList, template)
+    
+    userList.map(async (ele) => {
+      await client.pushMessage(ele.user, {type: 'text', text: '每日推薦來囉'})
+      await client.pushMessage(ele.user, template).catch(data => console.log(data.originalError.response.data))
+    })
+  }
 }
 
 export default new Controller();

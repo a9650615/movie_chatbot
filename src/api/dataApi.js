@@ -2,13 +2,17 @@ import mysql from 'promise-mysql'
 
 var conn;
 
-conn = mysql.createPool({
-  host: '192.168.1.2',
-  user: 'admin',
-  password: '1234',
-  database: 'movie_chat_bot',
-  port: 3307
-})
+class Mysql {
+  static conn = mysql.createPool({
+    host: '192.168.1.2',
+    user: 'admin',
+    password: '1234',
+    database: 'movie_chat_bot',
+    port: 3307
+  })
+}
+
+conn = Mysql.conn
 
 class DataApi {
 
@@ -34,6 +38,10 @@ class DataApi {
 
   async searchFavoriteList({ movie_id, movie_name, user }) {
     return await conn.query(`SELECT * FROM favorite_history WHERE user='${user}' order by time desc limit 5`)
+  }
+
+  async searchAllSubscribe() {
+    return await conn.query(`SELECT * FROM subscribe_list`)
   }
 }
 

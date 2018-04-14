@@ -6,4 +6,6 @@ const LINE =  {
 
 const DIALOG_FLOW = '50eddb97d271458a8e1af41ac456d564'
 
-export { LINE, DIALOG_FLOW }
+const CHATBASE = '9b07b462-0ecc-40e4-8711-1651b872f7c7'
+
+export { LINE, DIALOG_FLOW, CHATBASE }

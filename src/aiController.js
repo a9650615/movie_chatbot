@@ -75,6 +75,10 @@ class AiController {
     }
   }
 
+  async hotFavorite({ parameters, fulfillment }, userId) {
+    
+  }
+
 }
 
 export default new AiController()

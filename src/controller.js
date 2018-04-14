@@ -1,9 +1,14 @@
 import Api from './api'
+import TmpData from './TmpData'
 import { MovieView, ActorView, SearchView, ImagesList } from './template'
 
 class Controller {
-  async getMovie({ id }) {
+  async getMovie({ id }, userId) {
     const data = await Api.getMovieData(id)
+    TmpData.lastSearch[userId] = {
+      movie_id: id,
+      movie_name: data.title
+    }
     return MovieView({ data, id });
   }
 

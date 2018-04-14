@@ -29,7 +29,7 @@ const AiAgent = (message = '', userId) => {
         console.log('action:'+response.result.action)
         if (AiController[response.result.action]) {
           console.log(response.result)
-          let message = await AiController[response.result.action](response.result)
+          let message = await AiController[response.result.action](response.result, userId)
           resolve(message)
         }
       } else {
@@ -82,7 +82,7 @@ let postBackDispatcher = async({ event, userId, type }) => {
   data = JSON.parse('{"' + decodeURI(data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
   if (Controller[data.action]) {
     console.log('action is:'+data.action)
-    let message = await Controller[data.action](data)
+    let message = await Controller[data.action](data, userId)
     if (message) {
       lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
     }

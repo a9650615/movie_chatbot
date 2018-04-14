@@ -1,6 +1,6 @@
 import Api from './api'
 import TmpData from './TmpData'
-import { MovieView, ActorView, SearchView, ImagesList } from './template'
+import { MovieView, ActorView, SearchView, ImagesList, SelectorList } from './template'
 import DataApi from './api/dataApi'
 
 class Controller {
@@ -86,6 +86,20 @@ class Controller {
   async removeFavorite({ id, name } , userId) {
     await DataApi.unSetFavorite({movie_id: id, movie_name: name, user: userId})
     return {type: 'text', text: `已幫你移除${name}`}
+  }
+
+  async showMyFavorite({}, userId) {
+    let data = await DataApi.searchFavoriteList({ user: userId });
+    let list = data.map((val) => ({
+      label: val.movie_name,
+      action: `action=getMovie&id=${val.movie_id}`
+    }))
+    
+    return SelectorList({
+      options: list,
+      title: '我的最愛列表',
+      content: '最近四筆, 請選擇'
+    })
   }
 }
 

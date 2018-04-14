@@ -129,9 +129,29 @@ const ImagesList = ({ data, id }) => (
 	}
 )
 
+const SelectorList = ({ options = [], image = 'https://i.imgur.com/Ake6Gtw.png', title = 'title', content = 'content' }) => ({
+  "type": "template",
+  "altText": "選項面板",
+  "template": {
+      "type": "buttons",
+      "thumbnailImageUrl": image,
+      "imageAspectRatio": "rectangle",
+      "imageSize": "contain",
+      "imageBackgroundColor": "#FFFFFF",
+      "title": title,
+      "text": content,
+      "actions": options.slice(0, 4).map((val) => ({
+				"type": "postback",
+				"label": val.label,
+				"data": val.action
+			}))
+  }
+})
+
 export {
   MovieView,
 	ActorView,
 	SearchView,
-	ImagesList
+	ImagesList,
+	SelectorList
 }

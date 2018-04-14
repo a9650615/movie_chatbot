@@ -31,6 +31,10 @@ class DataApi {
   async unSetFavorite({ movie_id, movie_name, user }) {
     return await conn.query(`DELETE FROM favorite_history WHERE movie_name='${movie_id}' and movie_name='${movie_name}' and user='${user}'`)
   }
+
+  async searchFavoriteList({ movie_id, movie_name, user }) {
+    return await conn.query(`SELECT * FROM favorite_history WHERE user='${user}' order by time desc limit 5`)
+  }
 }
 
 

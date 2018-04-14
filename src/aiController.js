@@ -67,6 +67,14 @@ class AiController {
       return { type: 'text', text: fulfillment.speech }
     }
   }
+
+  async showMyFavorite({ parameters, fulfillment }, userId) {
+    return Controller.showMyFavorite({ }, userId)
+    if (fulfillment.speech == '') {
+      return { type: 'text', text: fulfillment.speech }
+    }
+  }
+
 }
 
 export default new AiController()

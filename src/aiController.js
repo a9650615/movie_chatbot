@@ -35,6 +35,20 @@ class AiController {
       return { type: 'text', text: fulfillment.speech }
     }
   }
+  
+  async subscribe({ parameters, fulfillment }, userId) {
+    Controller.subscribe({ }, userId)
+    return { type: 'text', text: fulfillment.speech }
+  }
+
+  async unSubscribe({ parameters, fulfillment }, userId) {
+    Controller.unSubscribe({ }, userId)
+    return { type: 'text', text: fulfillment.speech }
+  }
+
+  async randomRecommand({} ,userId) {
+    return await Controller.randomRecommand({}, userId)
+  }
 }
 
 export default new AiController()

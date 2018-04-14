@@ -68,6 +68,21 @@ class Api {
     let $ = await Pather.patchEle(`movieinfo_main.html/id=${id}`)
     return Number($('.score_num.count').text()||$('.count').text()) 
   }
+  
+  async getRecommandList(id) {
+    let $ = await Pather.patchEle(`chart.html?cate=rating`)
+    let list = []
+
+    $('.rank_list.table > .tr:not(.top)').each((i, ele) => {
+      list.push({
+        id: $(ele).find('.td:nth-child(2) > a').attr('href').replace('https://movies.yahoo.com.tw/movieinfo_main.html/id=', ''),
+        title: $(ele).find('.td:nth-child(2) > a').text().replace(/\s/g,'').replace('詳全文', '')
+      })
+    })
+
+    return list;
+  }
+
 }
 
 export default new Api()

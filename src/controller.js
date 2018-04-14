@@ -4,12 +4,13 @@ import { MovieView, ActorView, SearchView, ImagesList } from './template'
 import DataApi from './api/dataApi'
 
 class Controller {
-  async getMovie({ id }, userId) {
+  async getMovie({ id }, userId, notRecord = false) {
     const data = await Api.getMovieData(id)
     TmpData.lastSearch[userId] = {
       movie_id: id,
       movie_name: data.title
     }
+    if (!notRecord)
     DataApi.createSearchHistory({
       movie_id: id,
       movie_name: data.title,
@@ -64,7 +65,17 @@ class Controller {
   }
 
   async subscribe({ }, userId) {
+    await DataApi.subscribe({ user: userId })
+  }
 
+  async unSubscribe({ }, userId) {
+    await DataApi.unSubscribe({ user: userId })
+  }
+
+  async randomRecommand({}, userId) {
+    let list = await Api.getRecommandList();
+    let i = Math.floor(Math.random() * (list.length))
+    return await this.getMovie({id: list[i].id}, userId, true)
   }
 }
 

@@ -16,6 +16,13 @@ class DataApi {
     return await conn.query(`INSERT INTO search_history(movie_name, movie_id, user) VALUES('${movie_name}', '${movie_id}', '${user}')`)
   }
 
+  async subscribe({ user }) {
+    return await conn.query(`INSERT INTO subscribe_list(user) VALUES('${user}')`)
+  }
+
+  async unSubscribe({ user }) {
+    return await conn.query(`DELETE FROM subscribe_list WHERE user='${user}'`)
+  }
 }
 
 

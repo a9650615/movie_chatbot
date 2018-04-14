@@ -37,7 +37,7 @@ class DataApi {
   }
 
   async searchFavoriteList({ movie_id, movie_name, user }) {
-    return await conn.query(`SELECT * FROM favorite_history WHERE user='${user}' order by time desc limit 5`)
+    return await conn.query(`SELECT * FROM favorite_history WHERE user='${user}' GROUP BY movie_id order by time desc limit 5`)
   }
 
   async searchAllSubscribe() {

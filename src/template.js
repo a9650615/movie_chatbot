@@ -25,7 +25,7 @@ const MovieView = ({ data, id }) => (
             },
             {
               "thumbnailImageUrl": `${data.cover}`,
-              "imageBackgroundColor": "#000000",
+              "imageBackgroundColor": "#FFFFFF",
               "title": "簡介",
               "text": `${data.summary.length>40?`${data.summary.substring(0, 40)}...(點擊查看更多)`:data.summary}`,
               "defaultAction": {
@@ -47,7 +47,7 @@ const MovieView = ({ data, id }) => (
               ]
             }
         ],
-        "imageAspectRatio": "rectangle",
+        "imageAspectRatio": "square",
         "imageSize": "cover"
     }
   }
@@ -61,8 +61,9 @@ const ActorView = ({ data }) => (
 					"type": "carousel",
 					"columns": [
 						...data.actors.map((data) => {
+							console.log(data)
 							return {
-								"thumbnailImageUrl": `${data.img}`,
+								"thumbnailImageUrl": `${data.img.indexOf('https://')==-1?'https://movies.yahoo.com.tw/'+data.img:data.img}`,
 								"imageBackgroundColor": "#FFFFFF",
 								"title": `${data.text[0]||data.text}`,
 								"text": `${data.text.slice(1).join(' ')||'~'}`,
@@ -74,7 +75,7 @@ const ActorView = ({ data }) => (
 							}
 						})
 					],
-					"imageAspectRatio": "rectangle",
+					"imageAspectRatio": "square",
 					"imageSize": "cover"
 			}
 	}

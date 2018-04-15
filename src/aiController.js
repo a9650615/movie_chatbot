@@ -83,6 +83,23 @@ class AiController {
     return await Controller.hotSearch({}, userId)
   }
 
+  async getActors({}, userId) {
+    if (TmpData.lastSearch[userId]) {
+      let lastData = TmpData.lastSearch[userId];
+      return Controller.getActor({ id: lastData.movie_id, name: lastData.movie_name }, userId)
+    } else if (fulfillment.speech !== '') {
+      return { type: 'text', text: fulfillment.speech }
+    }
+  }
+
+  async goBackToSearch({fulfillment}, userId) {
+    if (TmpData.lastSearch[userId]) {
+      let lastData = TmpData.lastSearch[userId];
+      return Controller.getMovie({id: lastData.movie_id}, userId, true)
+    } else if (fulfillment.speech !== '') {
+      return { type: 'text', text: fulfillment.speech }
+    }
+  }
 }
 
 export default new AiController()

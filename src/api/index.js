@@ -22,7 +22,7 @@ class Api {
     let actor = []
     $('.starlist>li').each((index, ele) => {
       actor.push({
-        img: $(ele).find('img').attr('src'),
+        img: $(ele).find('img').attr('src') || 'https://movies.yahoo.com.tw/build/images/noavatar.jpg',
         text: $(ele).find('.actor_inner>h1').text().replace(/\s/g, ' ').split(' ').filter(text => text.length > 0)
       })
     })

@@ -123,6 +123,13 @@ let eventDispatcher = async (event) => {
                 // const message = await Controller.getMovie({id: 7161})
               if (message)
                 lineClient.pushMessage(event.source.groupId, message).catch(data => console.log(data.originalError.response.data))
+            } else {
+              SendMessageToChatBase({
+                user: userId,
+                intent: 'disscuss',
+                type,
+                message: event.message.text
+              })
             }
           }
         }
@@ -152,7 +159,7 @@ let postBackDispatcher = async({ event, userId, type, groupId }) => {
   }
 }
 
-schedule.scheduleJob('* * 7 * * *',(time) => {
+schedule.scheduleJob('2 2 7 * * *',(time) => {
   console.log('update')
   Controller.sendAllRecommand({ client: lineClient })
 })

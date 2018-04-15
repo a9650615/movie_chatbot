@@ -109,6 +109,9 @@ let eventDispatcher = async (event) => {
               lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
           } else if (type == 'group'){
             if (event.message.text.indexOf('小幫手') != -1) {
+              if (event.message.text.replace('小幫手', '') == '') 
+                message = {type: 'text', text: '叫我嗎?'};
+              if (!message)
               message = await AiAgent(event.message.text.replace('小幫手',''), event.source.groupId, type)
               console.log(message)
               if (!message) {

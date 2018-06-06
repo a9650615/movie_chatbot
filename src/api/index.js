@@ -75,7 +75,7 @@ class Api {
 
     $('.rank_list.table > .tr:not(.top)').each((i, ele) => {
       list.push({
-        id: $(ele).find('.td:nth-child(2) > a').attr('href').replace('https://movies.yahoo.com.tw/movieinfo_main.html/id=', ''),
+        id: $(ele).find('.td:nth-child(2) > a').attr('href').replace('https://movies.yahoo.com.tw/movieinfo_main/', ''),
         title: $(ele).find('.td:nth-child(2) > a').text().replace(/\s/g,'').replace('詳全文', '')
       })
     })
@@ -83,6 +83,21 @@ class Api {
     return list;
   }
 
+  async getMovieList() {
+    let $ = await Pather.patchEle('/index.html')
+    let list = []
+
+    $('.movie_ind_list > li').each((i, ele) => {
+      list.push({
+        title: $(ele).find('h1 > a.gabtn').text(),
+        release_date: $(ele).find('h3').text(),
+        rank: $(ele).find('.movielist_info .starbox .star_num').attr('data-num'),
+        img: $(ele).find('.movie_foto > img').attr('src')
+      })
+    })
+
+    return list
+  }
 }
 
 export default new Api()

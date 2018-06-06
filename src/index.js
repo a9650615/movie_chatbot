@@ -4,10 +4,12 @@ import { Client, validateSignature, WebhookEvent } from "@line/bot-sdk"
 import ApiAi from 'apiai'
 import chatbase from '@google/chatbase'
 import schedule from 'node-schedule'
-import Api from './api'
+import route from 'koa-route'
+import cors from '@koa/cors'
 import {LINE, DIALOG_FLOW, CHATBASE} from './config'
 import Controller from './controller'
 import AiController from './aiController'
+import ApiController from './apiController'
 
 const lineClient = new Client({
   channelSecret: LINE.channelSecret,
@@ -18,6 +20,10 @@ const dialogFlow = ApiAi(DIALOG_FLOW);
 
 const app = new Koa();
 app.use(KoaBody())
+app.use(cors())
+app.use(route.get('/hot_list', ApiController.getRecommandList))
+app.use(route.get('/list', ApiController.getMovieList))
+app.use(route.get('/search/:movie_name', ApiController.searchMovie))
 
 const SendMessageToChatBase = ({ user, message, intent = 'not-found', type, platform = 'Line', version = '1.0' }) => {
   if (type === "user")
@@ -172,7 +178,10 @@ app.use(async (ctx) => {
   // console.log(ctx)
   const signature = ctx.headers["x-line-signature"] || ''
   console.log(ctx.request.body, signature)
-  if (validateSignature(JSON.stringify(ctx.request.body||``), LINE.channelSecret, signature)) {
+  if (!signature) {
+    ctx.body = 'yeah!'
+  }
+  else if (validateSignature(JSON.stringify(ctx.request.body||``), LINE.channelSecret, signature)) {
       const events = ctx.request.body.events
       events.forEach(event => eventDispatcher(event))
   }

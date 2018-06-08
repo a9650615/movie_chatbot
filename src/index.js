@@ -114,8 +114,15 @@ let eventDispatcher = async (event) => {
               message = await Controller.searchMovie(event.message.text)
             }
               // const message = await Controller.getMovie({id: 7161})
-            if (message)
-              lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
+            if (message) {
+              if (typeof message == 'array') {
+                message.forEach((val) => {
+                  lineClient.pushMessage(userId, val).catch(data => console.log(data.originalError.response.data))
+                })
+              } else {
+                lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
+              }
+            }
           } else if (type == 'group'){
             if (event.message.text.indexOf('小幫手') != -1) {
               if (event.message.text.replace('小幫手', '') == '') 
@@ -133,8 +140,15 @@ let eventDispatcher = async (event) => {
                 message = await Controller.searchMovie(event.message.text.replace('小幫手',''))
               }
                 // const message = await Controller.getMovie({id: 7161})
-              if (message)
-                lineClient.pushMessage(event.source.groupId, message).catch(data => console.log(data.originalError.response.data))
+              if (message) {
+                if (typeof message == 'array') {
+                  message.forEach((val) => {
+                    lineClient.pushMessage(userId, val).catch(data => console.log(data.originalError.response.data))
+                  })
+                } else {
+                  lineClient.pushMessage(userId, message).catch(data => console.log(data.originalError.response.data))
+                }
+              }
             } else {
               SendMessageToChatBase({
                 user: userId,

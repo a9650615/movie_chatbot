@@ -100,6 +100,13 @@ class AiController {
       return { type: 'text', text: fulfillment.speech }
     }
   }
+
+  async myToken({}, userId) {
+    return [
+      { type: 'text', text: `你的 ID 為`},
+      { type: 'text', text: Buffer.from(userId).toString('base64')},
+    ];
+  }
 }
 
 export default new AiController()

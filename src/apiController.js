@@ -32,6 +32,21 @@ class ApiController {
       }
     }
   }
+
+  async login(ctx) {
+    const user = await DataApi.userLogin(ctx.request.body)
+    if (user.length > 0) {
+      ctx.body = {
+        status: 'success',
+        data: user[0]
+      }
+    } else {
+      ctx.body = {
+        status: 'failure',
+        data: '登入失敗，是否尚未註冊?'
+      }
+    }
+  }
 }
 
 export default new ApiController()

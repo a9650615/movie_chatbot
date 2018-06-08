@@ -59,6 +59,10 @@ class DataApi {
   async getUserByAcc(userName) {
     return await conn.query(`SELECT * FROM user_list WHERE account='${userName}'`);
   }
+
+  async userLogin({account, password}) {
+    return await conn.query(`SELECT * FROM user_list WHERE account='${account}' AND password='${password}' LIMIT 1`)
+  }
 }
 
 

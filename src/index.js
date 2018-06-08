@@ -21,6 +21,7 @@ const dialogFlow = ApiAi(DIALOG_FLOW);
 const app = new Koa();
 app.use(KoaBody())
 app.use(cors())
+app.use(route.post('/login', ApiController.login))
 app.use(route.post('/register', ApiController.register))
 app.use(route.get('/hot_list', ApiController.getRecommandList))
 app.use(route.get('/list', ApiController.getMovieList))

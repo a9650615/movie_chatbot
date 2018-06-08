@@ -98,6 +98,11 @@ class ApiController {
       like: favorite.like.length > 0
     }
   }
+
+  async getFavorite(ctx, user) {
+    const data = await DataApi.getFavoriteList({ user })
+    ctx.body = data
+  }
 }
 
 export default new ApiController()

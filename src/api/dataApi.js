@@ -69,6 +69,10 @@ class DataApi {
       like: await conn.query(`SELECT * FROM favorite_history WHERE movie_id='${movie_id}' and user='${user}' LIMIT 1`)
     }
   }
+
+  async getFavoriteList({ user }) {
+    return await conn.query(`SELECT * FROM favorite_history WHERE user='${user}' GROUP BY movie_id order by ID desc`)
+  }
 }
 
 

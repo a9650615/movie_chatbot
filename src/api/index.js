@@ -52,9 +52,9 @@ class Api {
   }
 
   async searchPhoto(id) {
-    let $ = await Pather.patchEle(`movieinfo_main.html/id=${id}`)
+    let $ = await Pather.patchEle(`movieinfo_main/${id}`)
     let list = []
-    $('.l_box:nth-child(4) .trailer_list a').each((index, ele) => {
+    $('.l_box:nth-child(3) .trailer_list a').each((index, ele) => {
       list.push({src: $(ele).find('img').attr('src'), href: $(ele).attr('href').replace('https://movies.yahoo.com.tw/movieinfo_photos.html/id=', '').replace('?movie_photo_id=', ',')})
     })
     return list

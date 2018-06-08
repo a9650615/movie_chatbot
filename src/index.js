@@ -21,6 +21,7 @@ const dialogFlow = ApiAi(DIALOG_FLOW);
 const app = new Koa();
 app.use(KoaBody())
 app.use(cors())
+app.use(route.post('/comment', ApiController.addComment))
 app.use(route.post('/getreact', ApiController.getMovieReaction))
 app.use(route.post('/unstar', ApiController.unStarMovie))
 app.use(route.post('/star', ApiController.starMovie))

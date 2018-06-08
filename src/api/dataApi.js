@@ -45,11 +45,11 @@ class DataApi {
   }
 
   async hotFavoriteList() {
-    return await conn.query(`SELECT COUNT(movie_id) as count,movie_id, movie_name FROM favorite_history GROUP BY movie_id ORDER BY count DESC`)
+    return await conn.query(`SELECT COUNT(movie_id) as count,movie_id, movie_name FROM favorite_history GROUP BY movie_id ORDER BY count DESC LIMIT 500`)
   }
 
   async hotSearchList() {
-    return await conn.query(`SELECT COUNT(movie_id) as count,movie_id, movie_name FROM search_history GROUP BY movie_id ORDER BY count DESC`)
+    return await conn.query(`SELECT COUNT(movie_id) as count,movie_id, movie_name FROM search_history GROUP BY movie_id ORDER BY count DESC  LIMIT 500`)
   }
 
   async createUser({ account, password, lineID, name }) {
@@ -66,12 +66,17 @@ class DataApi {
 
   async getMovieReaction({ user, movie_id }) {
     return {
-      like: await conn.query(`SELECT * FROM favorite_history WHERE movie_id='${movie_id}' and user='${user}' LIMIT 1`)
+      like: await conn.query(`SELECT * FROM favorite_history WHERE movie_id='${movie_id}' and user='${user}' LIMIT 1`),
+      comments: await conn.query(`SELECT * FROM comments WHERE movie_id='${movie_id}' ORDER BY ID desc`)
     }
   }
 
   async getFavoriteList({ user }) {
     return await conn.query(`SELECT * FROM favorite_history WHERE user='${user}' GROUP BY movie_id order by ID desc`)
+  }
+
+  async addComment({ user, comment, movie_id }) {
+    return await conn.query(`INSERT INTO comments(user, comment, movie_id) VALUES('${user}', '${comment}', '${movie_id}')`);
   }
 }
 

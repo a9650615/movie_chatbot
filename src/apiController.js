@@ -93,15 +93,22 @@ class ApiController {
 
   async getMovieReaction(ctx) {
     const data = ctx.request.body
-    const favorite = await DataApi.getMovieReaction({ user: data.lineID, movie_id: decodeURI(data.movieID)})
+    const res = await DataApi.getMovieReaction({ user: data.lineID, movie_id: decodeURI(data.movieID)})
     ctx.body = {
-      like: favorite.like.length > 0
+      like: res.like.length > 0,
+      comments: res.comments
     }
   }
 
   async getFavorite(ctx, user) {
     const data = await DataApi.getFavoriteList({ user })
     ctx.body = data
+  }
+
+  async addComment(ctx) {
+    const data = ctx.request.body
+    const res = await DataApi.addComment({ user: data.lineID, comment: data.comment, movie_id: decodeURI(data.movieID) })
+    ctx.body = {}
   }
 }
 

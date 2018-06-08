@@ -52,6 +52,52 @@ class ApiController {
     const photos = await Api.searchPhoto(movie_id)
     ctx.body = photos
   }
+
+  async starMovie(ctx) {
+    const data = ctx.request.body
+    const sendData = {
+      movie_id: decodeURI(data.movieID),
+      movie_name: data.movieName,
+      user: data.lineID
+    }
+    try {
+      await DataApi.setFavorite(sendData)
+      ctx.body = {
+        status: 'success'
+      }
+    } catch (e) {
+      ctx.body = {
+        status: 'failure'
+      }
+    }
+  }
+
+  async unStarMovie(ctx) {
+    const data = ctx.request.body
+    const sendData = {
+      movie_id: decodeURI(data.movieID),
+      movie_name: data.movieName,
+      user: data.lineID
+    }
+    try {
+      await DataApi.unSetFavorite(sendData)
+      ctx.body = {
+        status: 'success'
+      }
+    } catch (e) {
+      ctx.body = {
+        status: 'failure'
+      }
+    }
+  }
+
+  async getMovieReaction(ctx) {
+    const data = ctx.request.body
+    const favorite = await DataApi.getMovieReaction({ user: data.lineID, movie_id: decodeURI(data.movieID)})
+    ctx.body = {
+      like: favorite.like.length > 0
+    }
+  }
 }
 
 export default new ApiController()

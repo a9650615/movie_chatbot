@@ -33,7 +33,7 @@ class DataApi {
   }
 
   async unSetFavorite({ movie_id, movie_name, user }) {
-    return await conn.query(`DELETE FROM favorite_history WHERE movie_name='${movie_id}' and movie_name='${movie_name}' and user='${user}'`)
+    return await conn.query(`DELETE FROM favorite_history WHERE movie_id='${movie_id}' and movie_name='${movie_name}' and user='${user}'`)
   }
 
   async searchFavoriteList({ movie_id, movie_name, user }) {
@@ -62,6 +62,12 @@ class DataApi {
 
   async userLogin({account, password}) {
     return await conn.query(`SELECT * FROM user_list WHERE account='${account}' AND password='${password}' LIMIT 1`)
+  }
+
+  async getMovieReaction({ user, movie_id }) {
+    return {
+      like: await conn.query(`SELECT * FROM favorite_history WHERE movie_id='${movie_id}' and user='${user}' LIMIT 1`)
+    }
   }
 }
 

@@ -21,6 +21,9 @@ const dialogFlow = ApiAi(DIALOG_FLOW);
 const app = new Koa();
 app.use(KoaBody())
 app.use(cors())
+app.use(route.post('/getreact', ApiController.getMovieReaction))
+app.use(route.post('/unstar', ApiController.unStarMovie))
+app.use(route.post('/star', ApiController.starMovie))
 app.use(route.post('/login', ApiController.login))
 app.use(route.post('/register', ApiController.register))
 app.use(route.get('/photos/:movie_id', ApiController.getPhoto))

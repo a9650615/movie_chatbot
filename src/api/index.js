@@ -2,9 +2,10 @@ import Pather from './pathcer'
 
 class Api {
   async getMovieData(id) {
-    let $ = await Pather.patchEle(`movieinfo_main.html/id=${id}`)
+    let $ = await Pather.patchEle(`movieinfo_main/${id}`)
     const data = {
       title: $('.movie_intro_info_r>h1').text(),
+      eng_title: $('.movie_intro_info_r>h3').text(),
       upTime: $('.movie_intro_info_r>span').eq(0).text(),
       long: $('.movie_intro_info_r>span').eq(1).text(),
       director: $('.movie_intro_info_r>.movie_intro_list').eq(0).text().trim(),
@@ -18,7 +19,7 @@ class Api {
   }
   
   async getActors(id) {
-    let $ = await Pather.patchEle(`movieinfo_main.html/id=${id}`)
+    let $ = await Pather.patchEle(`movieinfo_main/${id}`)
     let actor = []
     $('.starlist>li').each((index, ele) => {
       actor.push({
@@ -42,7 +43,7 @@ class Api {
         img: $(ele).find('.foto>img').attr('src'),
         title: $(ele).find('.release_movie_name>a').text(),
         time: $(ele).find('.release_movie_name .time').text(),
-        id: $(ele).find('.release_movie_name>a').attr('href').replace('https://movies.yahoo.com.tw/movieinfo_main.html/id=', '')
+        id: $(ele).find('.release_movie_name>a').attr('href').replace('https://movies.yahoo.com.tw/movieinfo_main/', '')
       }
       list.push(data)
     })
@@ -89,6 +90,7 @@ class Api {
 
     $('.movie_ind_list > li').each((i, ele) => {
       list.push({
+        id: $(ele).find('h1 > a.gabtn').attr('href').replace('https://movies.yahoo.com.tw/movieinfo_main/', ''),
         title: $(ele).find('h1 > a.gabtn').text(),
         release_date: $(ele).find('h3').text(),
         rank: $(ele).find('.movielist_info .starbox .star_num').attr('data-num'),

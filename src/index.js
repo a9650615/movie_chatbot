@@ -21,9 +21,11 @@ const dialogFlow = ApiAi(DIALOG_FLOW);
 const app = new Koa();
 app.use(KoaBody())
 app.use(cors())
+app.use(route.post('/register', ApiController.register))
 app.use(route.get('/hot_list', ApiController.getRecommandList))
 app.use(route.get('/list', ApiController.getMovieList))
 app.use(route.get('/search/:movie_name', ApiController.searchMovie))
+app.use(route.get('/detail/:movie_id', ApiController.getMovieDetail))
 
 const SendMessageToChatBase = ({ user, message, intent = 'not-found', type, platform = 'Line', version = '1.0' }) => {
   if (type === "user")

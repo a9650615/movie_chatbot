@@ -51,6 +51,14 @@ class DataApi {
   async hotSearchList() {
     return await conn.query(`SELECT COUNT(movie_id) as count,movie_id, movie_name FROM search_history GROUP BY movie_id ORDER BY count DESC`)
   }
+
+  async createUser({ account, password, lineID, name }) {
+    return await conn.query(`INSERT INTO user_list(name, account, password, lineID) VALUES('${name}', '${account}', '${password}', '${lineID}')`);
+  }
+
+  async getUserByAcc(userName) {
+    return await conn.query(`SELECT * FROM user_list WHERE account='${userName}'`);
+  }
 }
 
 

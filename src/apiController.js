@@ -47,6 +47,11 @@ class ApiController {
       }
     }
   }
+
+  async getPhoto(ctx, movie_id) {
+    const photos = await Api.searchPhoto(movie_id)
+    ctx.body = photos
+  }
 }
 
 export default new ApiController()

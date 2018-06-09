@@ -78,6 +78,23 @@ class DataApi {
   async addComment({ user, comment, movie_id }) {
     return await conn.query(`INSERT INTO comments(user, comment, movie_id) VALUES('${user}', '${comment}', '${movie_id}')`);
   }
+
+  async addNews({ user, news, movie_id}) {
+    if (news === '') {
+      return await conn.query(`DELETE FROM news WHERE movie_id='${movie_id}'`)
+    }
+    else {
+      if ((await this.getNews({ movie_id })).length === 0) {
+        return await conn.query(`INSERT INTO news(content, movie_id, user) VALUES('${news}', '${movie_id}', '${user}')`);
+      } else {
+        return await conn.query(`UPDATE news set content='${news}', user='${user}' WHERE movie_id='${movie_id}'`);
+      }
+    }
+  }
+  
+  async getNews({ movie_id }) {
+    return await conn.query(`SELECT * FROM news WHERE movie_id='${movie_id}'`);
+  }
 }
 
 

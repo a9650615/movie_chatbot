@@ -110,6 +110,26 @@ class ApiController {
     const res = await DataApi.addComment({ user: data.lineID, comment: data.comment, movie_id: decodeURI(data.movieID) })
     ctx.body = {}
   }
+
+  async addNews(ctx) {
+    const data = ctx.request.body
+    try {
+      const res = await DataApi.addNews({ user: data.lineID, news: data.news, movie_id: decodeURI(data.movieID) })
+      ctx.body = {
+        status: 'success',
+        data: '新增完畢'
+      }
+    } catch (e) {
+      ctx.body = {
+        status: 'failure'
+      }
+    }
+  }
+
+  async getNews(ctx, movie_id) {
+    const res = await DataApi.getNews({ movie_id: decodeURI(movie_id) })
+    ctx.body = res
+  }
 }
 
 export default new ApiController()
